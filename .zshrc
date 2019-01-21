@@ -134,18 +134,7 @@ export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 export ANSIBLE_VAULT_IDENTITY_LIST=~/.secrets/vault
 
 # Make sure to put the vault password file in ~/.secrets/vault on your system and set its permissions to 0400
-# # Clarkinc Run ansible command
 alias acmdci="ansible --become --vault-password-file='~/.secrets/vault' -i"
-# # Clarkinc Run ansible playbook
-alias pbci="ansible-playbook -e ansible_user='apeterson@THERESTAURANTSTORE.COM' -i hosts/production"
-alias pbcid="ansible-playbook -e ansible_user='apeterson@THERESTAURANTSTORE.COM' -i hosts/development"
-alias pbcit="ansible-playbook -e ansible_user='apeterson@THERESTAURANTSTORE.COM' -i hosts/testing"
-# # Run ansible playbook as root
-alias pbroot="ansible-playbook -k -u root --vault-password-file='~/.secrets/vault' -i"
-# # Example: pbci hosts/wdn.clarkinc.io playbooks/common.yml
-# # Ansible Debug
-alias pbciddbg="ansible --become --vault-password-file='~/.secrets/vault' -i hosts/wd.clarkinc.io -m debug -a"
-alias pbdbggct="ansible --become --vault-password-file='~/.secrets/vault' -i hosts/gothamcity.test -m debug -a"
 # # Git pull CfgMgt & Roles
 alias gititall="git pull && cd playbooks/roles && git pull && cd -"
 alias gclose="git branch -D"
