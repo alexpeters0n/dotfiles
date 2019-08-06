@@ -2,12 +2,19 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/apeterson/.oh-my-zsh
+export ZSH=/Users/alexpeterson/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="powerlevel9k/powerlevel9k"
+
+# Set list of themes to load
+# Setting this variable when ZSH_THEME=random
+# cause zsh load theme from this variable instead of
+# looking in ~/.oh-my-zsh/themes/
+# An empty array have no effect
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -51,15 +58,18 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git gitfast docker)
+plugins=(
+  git
+  gitfast
+  docker
+  virtualenv
+  virtualenvwrapper
+)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-#. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
-autoload -U colors; colors
-source /Users/apeterson/git/github.com/zsh-kubectl-prompt
-RPROMPT='%{$fg[blue]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -78,11 +88,23 @@ RPROMPT='%{$fg[blue]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-#Powerlevel9K Settings
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+#Powerline Configuration
 POWERLEVEL9K_MODE='awesome-fontconfig'
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(time history status dir vcs)
-POWERLEVEL9K_DISABLE_RPROMPT=true
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon status dir vcs virtualenv)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status history  time ram load battery)
+POWERLEVEL9K_DISABLE_RPROMPT=false
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_middle"
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
 
@@ -98,7 +120,7 @@ POWERLEVEL9K_DIR_HOME_BACKGROUND='red'
 POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='black'
 POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='red'
 
-POWERLEVEL9K_TIME_FOREGROUND='cyan'
+POWERLEVEL9K_TIME_FOREGROUND='000'
 POWERLEVEL9K_TIME_BACKGROUND='blue'
 
 POWERLEVEL9K_STATUS_VERBOSE=false
@@ -112,31 +134,11 @@ POWERLEVEL9K_STATUS_ERROR_BACKGROUND='cyan'
 POWERLEVEL9K_STATUS_ERROR_FOREGROUND='blue'
 POWERLEVEL9K_STATUS_ERROR_BACKGROUND='cyan'
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+POWERLEVEL9K_PYTHON_ICON="\UE73C"
 
-#git push origin
-alias gpo="git push origin"
-#go programming path
-export GOPATH=/Users/apeterson/go
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/alexpeterson/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/alexpeterson/Downloads/google-cloud-sdk/path.zsh.inc'; fi
 
-export PATH=$GOPATH/bin:$PATH
-#python homebrew
-export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/alexpeterson/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/alexpeterson/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
 
-#Ansible Vault
-export ANSIBLE_VAULT_IDENTITY_LIST=~/.secrets/vault
-
-# Make sure to put the vault password file in ~/.secrets/vault on your system and set its permissions to 0400
-alias acmdci="ansible --become --vault-password-file='~/.secrets/vault' -i"
-# # Git pull CfgMgt & Roles
-alias gititall="git pull && cd playbooks/roles && git pull && cd -"
-alias gclose="git branch -D"
-
-eval $(thefuck --alias)
